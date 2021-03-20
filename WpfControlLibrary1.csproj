@@ -71,6 +71,8 @@
     <Compile Include="app.cs" />
     <Compile Include="command.cs" />
     <Compile Include="command1.cs" />
+    <Compile Include="command2.cs" />
+    <Compile Include="command3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

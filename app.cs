@@ -17,10 +17,7 @@ namespace WpfControlLibrary1
             application.CreateRibbonTab("Quyet");
             var pannel = application.CreateRibbonPanel("Quyet", "Hello World");
 
-            var buttondata = new PushButtonData("button1", 
-                "Hello World",
-                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"WpfControlLibrary1.dll"), 
-                "WpfControlLibrary1.command");
+            var buttondata = new TextBoxData("button1");
             pannel.AddItem(buttondata);
 
             var buttondata1 = new PushButtonData("button2",
