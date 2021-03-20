@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Linq;
 using System.Windows;
 
 namespace WpfControlLibrary1
@@ -11,10 +12,34 @@ namespace WpfControlLibrary1
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            MessageBox.Show("Hello work Quyet");
+            var uidoc = commandData.Application.ActiveUIDocument;
+            var doc = uidoc.Document;
+
+            var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
+                .WhereElementIsNotElementType()
+                .ToElements();
+
+            using (Transaction tran = new Transaction(doc,"Parameter Transfer"))
+            {
+                tran.Start();
+
+                foreach (var ele in eles)
+                {
+                    var volume = ele.LookupParameter("Volume").AsValueString();
+                    ele.LookupParameter("Mark").Set(volume);
+
+                    //foreach (Parameter para in ele.Parameters)
+                    //{
+                    //    if(para.Definition.Name == "Volume")
+                    //    {
+
+                    //    }
+                    //} 
+                }
 
 
-
+                tran.Commit();
+            }
 
             return Result.Succeeded;
         }
