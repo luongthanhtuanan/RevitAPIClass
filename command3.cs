@@ -25,8 +25,8 @@ namespace WpfControlLibrary1
 
                 foreach (var ele in eles)
                 {
-                    var volume = ele.LookupParameter("Volume").AsValueString();
-                    ele.LookupParameter("Mark").Set(volume);
+                    var volume = ele.LookupParameter("Volume").AsDouble();
+                    ele.LookupParameter("Mark").Set(volume.ToString());
 
                     //foreach (Parameter para in ele.Parameters)
                     //{
