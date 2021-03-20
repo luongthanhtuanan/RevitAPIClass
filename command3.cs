@@ -26,7 +26,9 @@ namespace WpfControlLibrary1
                 foreach (var ele in eles)
                 {
                     var volume = ele.LookupParameter("Volume").AsDouble();
+                    
                     volume = UnitUtils.Convert(volume, DisplayUnitType.DUT_CUBIC_FEET, DisplayUnitType.DUT_CUBIC_METERS);
+                    volume = System.Math.Round(volume, 2); ;
                     ele.LookupParameter("Mark").Set(volume.ToString());
 
                     //double.Parse("0.1111111");
