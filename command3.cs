@@ -28,6 +28,7 @@ namespace WpfControlLibrary1
                     var volume = ele.LookupParameter("Volume").AsDouble();
                     ele.LookupParameter("Mark").Set(volume.ToString());
 
+                    //double.Parse("0.1111111");
                     //foreach (Parameter para in ele.Parameters)
                     //{
                     //    if(para.Definition.Name == "Volume")
