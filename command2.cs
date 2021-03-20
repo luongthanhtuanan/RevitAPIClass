@@ -16,10 +16,12 @@ namespace WpfControlLibrary1
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
             var filter = new filter();
-            var ele = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol))
-                .Cast<FamilySymbol>()
-                .Where(familysymbol => familysymbol.Name == "600 x 600 x 900mm").FirstOrDefault();
-            uidoc.PostRequestForElementTypePlacement(ele);
+            var ele = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
+                .WhereElementIsNotElementType()
+                .ToElements();
+
+
+
             return Result.Succeeded;
         }
     }

@@ -12,7 +12,9 @@ namespace WpfControlLibrary1
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            var doc = commandData.Application.ActiveUIDocument.Document;
+            var uidoc = commandData.Application.ActiveUIDocument;
+            var doc = uidoc.Document;
+
             var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming)
                 .WhereElementIsNotElementType()
                 .ToElements();
@@ -26,6 +28,7 @@ namespace WpfControlLibrary1
                     var outline = new Outline(boundingBox.Min, boundingBox.Max);
 
                     var filter = new BoundingBoxIntersectsFilter(outline);
+
                     var floors = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Floors)
                         .WhereElementIsNotElementType()
                         .WherePasses(filter)
