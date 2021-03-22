@@ -15,7 +15,7 @@ namespace WpfControlLibrary1
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralFraming)
+            var eles = new FilteredElementCollector(doc).OfCategory((BuiltInCategory.OST_StructuralFraming))
                 .WhereElementIsNotElementType()
                 .ToElements();
 
@@ -36,8 +36,13 @@ namespace WpfControlLibrary1
 
                     foreach (var item in floors)
                     {
-                        JoinGeometryUtils.JoinGeometry(doc, ele, item);
-                        JoinGeometryUtils.SwitchJoinOrder(doc, ele, item);
+                        var joined = JoinGeometryUtils.AreElementsJoined(doc, ele, item);
+                        if (joined == true)
+
+                            JoinGeometryUtils.UnjoinGeometry(doc, ele, item);
+                            JoinGeometryUtils.JoinGeometry(doc, ele, item);
+                            JoinGeometryUtils.SwitchJoinOrder(doc, ele, item);
+                      
                     }
                 }
                 tran.Commit();
