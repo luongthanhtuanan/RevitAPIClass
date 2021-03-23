@@ -15,7 +15,7 @@ namespace WpfControlLibrary1
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var eles = new FilteredElementCollector(doc).OfCategory((BuiltInCategory.OST_Walls))
+            var eles = new FilteredElementCollector(doc).OfCategory((BuiltInCategory.OST_StructuralFraming))
                 .WhereElementIsNotElementType()
                 .ToElements();
 
