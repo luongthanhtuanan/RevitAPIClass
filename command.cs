@@ -41,7 +41,7 @@ namespace WpfControlLibrary1
 
                             JoinGeometryUtils.UnjoinGeometry(doc, ele, item);
                             JoinGeometryUtils.JoinGeometry(doc, ele, item);
-                            JoinGeometryUtils.SwitchJoinOrder(doc, ele, item);
+                            //JoinGeometryUtils.SwitchJoinOrder(doc, ele, item);
                       
                     }
                 }
