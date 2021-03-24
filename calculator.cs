@@ -31,16 +31,10 @@ namespace WpfControlLibrary1
                 tran.Start();
                 foreach (var ele in eles)
                 {
-                    if (ele.Name == "300 x 450mm")
-                    {
-                        var volume = ele.LookupParameter("Volume").AsDouble();
-                        volume = UnitUtils.Convert(volume, DisplayUnitType.DUT_CUBIC_FEET, DisplayUnitType.DUT_CUBIC_METERS);
-                        ele.LookupParameter("Mark").Set(volume.ToString());
-                    }
-                    else
-                    {
-                        doc.Delete(ele.Id);
-                    }
+
+                    var geo = ele.get_Geometry(new Options());
+                    var face = ((Solid)geo).Faces;             
+
                 }
                 tran.Commit();
             }                  
