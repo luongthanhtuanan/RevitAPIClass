@@ -17,13 +17,16 @@ namespace WpfControlLibrary1
 
             //Get elements of Category
             var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
-                .WhereElementIsNotElementType()
+                .WhereElementIsNotElementType()                
                 .ToElementIds();
 
+            foreach (var item in collection)
+            {
 
+            }
 
 
             return Result.Succeeded;
         }
-    } 
+    }    
 }
