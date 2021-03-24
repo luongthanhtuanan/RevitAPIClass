@@ -33,13 +33,13 @@ namespace WpfControlLibrary1
                 {
                     if (ele.Name == "300 x 450mm")
                     {
-                        {
-                            foreach (var item in floors)
-                            {
-                                
-                                JoinGeometryUtils.JoinGeometry(doc, ele, item);
-                            }
-                        }
+                        var volume = ele.LookupParameter("Volume").AsDouble();
+                        volume = UnitUtils.Convert(volume, DisplayUnitType.DUT_CUBIC_FEET, DisplayUnitType.DUT_CUBIC_METERS);
+                        ele.LookupParameter("Mark").Set(volume.ToString());
+                    }
+                    else
+                    {
+                        doc.Delete(ele.Id);
                     }
                 }
                 tran.Commit();
