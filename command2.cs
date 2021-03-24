@@ -17,7 +17,7 @@ namespace WpfControlLibrary1
             var doc = uidoc.Document;
             var filter = new filter();
             var ele = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
-                .WhereElementIsNotElementType()
+                .WhereElementIsNotElementType()            
                 .ToElements();
 
 

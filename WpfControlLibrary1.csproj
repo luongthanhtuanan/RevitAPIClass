@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app.cs" />
-    <Compile Include="command.cs" />
+    <Compile Include="autojoin.cs" />
     <Compile Include="command1.cs" />
     <Compile Include="command2.cs" />
     <Compile Include="command3.cs" />
@@ -86,6 +86,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="transfer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

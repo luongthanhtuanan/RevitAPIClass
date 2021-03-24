@@ -8,14 +8,14 @@ namespace WpfControlLibrary1
 {
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
-    class command : IExternalCommand
+    class autojoin : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var eles = new FilteredElementCollector(doc).OfCategory((BuiltInCategory.OST_StructuralFraming))
+            var eles = new FilteredElementCollector(doc).OfCategory((BuiltInCategory.OST_Walls))
                 .WhereElementIsNotElementType()
                 .ToElements();
 
