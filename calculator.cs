@@ -42,13 +42,15 @@ namespace WpfControlLibrary1
 
                     foreach (var obj in geo)
                     {
-                        var solid = obj as Solid;   
-                        
-                        foreach (Face f in solid.Faces)
+                        var solid = obj as Solid;
+                        if (solid.Faces != null)
                         {
-                            totalarea += f.Area;
-                            totalface++;
-                        }                      
+                            foreach (Face f in solid.Faces)
+                            {
+                                totalarea += f.Area;
+                                totalface++;
+                            }
+                        }                                        
                     }
                     totalarea = UnitUtils.Convert(totalarea, DisplayUnitType.DUT_SQUARE_FEET, DisplayUnitType.DUT_SQUARE_METERS);
                     ele.LookupParameter("Comments").Set(totalarea.ToString());
