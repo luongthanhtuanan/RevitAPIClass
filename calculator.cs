@@ -33,7 +33,7 @@ namespace WpfControlLibrary1
                 {
 
                     var geo = ele.get_Geometry(new Options());
-                    var face = ((Solid)geo).Faces;             
+                    var face = geo(Solid).Faces;             
 
                 }
                 tran.Commit();
