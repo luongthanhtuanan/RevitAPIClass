@@ -20,11 +20,12 @@ namespace WpfControlLibrary1
 
             //Get elements of Category
             var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
-                .WhereElementIsNotElementType()            
+                .WhereElementIsNotElementType()
                 .ToElements();
             var floors = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Floors)
                 .WhereElementIsNotElementType()
                 .ToElements();
+
 
             using (var tran = new Transaction(doc, "set information to parameter"))
             {
@@ -35,7 +36,7 @@ namespace WpfControlLibrary1
                     //otp.DetailLevel = ViewDetailLevel.Fine;
                     //GeometryElement geo = ele.get_Geometry( new Options());
                     GeometryElement geo = ele.get_Geometry(otp);
-
+                    
                     //declare variable
                     int totalface = 0;
                     double totalarea = 0.0;
@@ -43,17 +44,18 @@ namespace WpfControlLibrary1
                     foreach (var obj in geo)
                     {
                         var solid = obj as Solid;
-                        if (solid.Faces != null)
+                        if (solid != null)
                         {
                             foreach (Face f in solid.Faces)
                             {
                                 totalarea += f.Area;
                                 totalface++;
                             }
-                        }                                        
+                        }
                     }
                     totalarea = UnitUtils.Convert(totalarea, DisplayUnitType.DUT_SQUARE_FEET, DisplayUnitType.DUT_SQUARE_METERS);
                     ele.LookupParameter("Comments").Set(totalarea.ToString());
+                    ele.LookupParameter("Mark").Set(totalface.ToString());
                 }
                 tran.Commit();
             }                  
