@@ -5,6 +5,7 @@ using Autodesk.Revit.UI.Selection;
 using System.Linq;
 using System.Windows;
 using System.Collections.Generic;
+using System;
 
 namespace WpfControlLibrary1
 {
@@ -18,7 +19,9 @@ namespace WpfControlLibrary1
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            //Get elements of Category
+            try
+            {
+                //Get elements of Category
             var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
                 .WhereElementIsNotElementType()
                 .ToElements();
@@ -41,12 +44,10 @@ namespace WpfControlLibrary1
                     int totalface = 0;
                     double totalarea = 0.0;
 
-                    //Get side face
-                    var sideFaces = HostObjectUtils.GetSideFaces((HostObject)ele,ShellLayerType(solid));
-                    //Access the first side face
-                    Element ele = doc.GetElement(sideFaces[0]);                   
+                    //Get side face                                                                 
+                        
 
-                   
+
                     foreach (var obj in geo)
                     {
                         var solid = obj as Solid;
@@ -54,8 +55,10 @@ namespace WpfControlLibrary1
                         {                           
                             foreach (Face f in solid.Faces)
                             {
-                                totalarea += f.Area;
-                                totalface++;
+                                    var surf = f.GetSurface();
+                                    var ref = new Reference
+                                    totalarea += f.Area;
+                                    totalface++;
                             }
                         }
                     }
@@ -65,7 +68,16 @@ namespace WpfControlLibrary1
                 }
                 tran.Commit();
             }                  
-            return Result.Succeeded;         
+            return Result.Succeeded;        
+            }
+            catch (Exception ex)
+            {
+
+                message = ex.Message;
+                return Result.Failed;
+            }
+
+             
         }
     }    
 }
