@@ -22,53 +22,64 @@ namespace WpfControlLibrary1
             try
             {
                 //Get elements of Category
-            var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
-                .WhereElementIsNotElementType()
-                .ToElements();
-            var floors = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Floors)
-                .WhereElementIsNotElementType()
-                .ToElements();
+                var eles = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_StructuralColumns)
+                    .WhereElementIsNotElementType()
+                    .ToElements();
+                var floors = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Floors)
+                    .WhereElementIsNotElementType()
+                    .ToElements();
 
-
-            using (var tran = new Transaction(doc, "set information to parameter"))
-            {
-                tran.Start();
-                foreach (var ele in eles)
+                using (var tran = new Transaction(doc, "set information to parameter"))
                 {
-                    var otp = new Options();
-                    //otp.DetailLevel = ViewDetailLevel.Fine;
-                    //GeometryElement geo = ele.get_Geometry( new Options());
-                    GeometryElement geo = ele.get_Geometry(otp);
-                    
-                    //declare variable
-                    int totalface = 0;
-                    double totalarea = 0.0;
+                    tran.Start();
+                    foreach (var ele in eles)
 
-                    //Get side face                                                                 
-                        
-
-
-                    foreach (var obj in geo)
                     {
-                        var solid = obj as Solid;
-                        if (solid != null)
-                        {                           
-                            foreach (Face f in solid.Faces)
+                        Options options = new Options();
+                        options.DetailLevel = ViewDetailLevel.Fine;
+                        options.ComputeReferences = true;
+                        GeometryElement geomElem = ele.get_Geometry(options);                        
+
+                        //declare variable
+                        int totalface = 0;
+                        double totalarea = 0.0;
+
+                        //Get side face
+
+                        foreach (var obj in geomElem)
+                        {
+                            var solid = obj as Solid;
+                            if (solid != null)
                             {
-                                    var surf = f.GetSurface();
-                                    var ref = new Reference
-                                    totalarea += f.Area;
-                                    totalface++;
+                                foreach (Face face in solid.Faces)
+                                {                                    
+                                    PlanarFace planarFace = face as PlanarFace;
+                                    if (null != planarFace)
+                                    {
+                                        XYZ origin = planarFace.Origin;
+                                        XYZ normal = planarFace.FaceNormal;
+                                        //XYZ normal = planarFace.ComputeNormal(new UV(planarFace.Origin.X, planarFace.Origin.Y));
+                                        XYZ vectorX = planarFace.XVector;
+                                        XYZ vectorY = planarFace.YVector;
+                                        if (normal.Z == 0)
+                                        {
+                                            totalarea += face.Area;
+                                            totalface++;
+                                        }                                       
+
+                                    }                                   
+                                    //totalarea += face.Area;
+                                    //totalface++;
+                                }
                             }
                         }
+                        totalarea = UnitUtils.Convert(totalarea, DisplayUnitType.DUT_SQUARE_FEET, DisplayUnitType.DUT_SQUARE_METERS);
+                        ele.LookupParameter("Comments").Set(totalarea.ToString());
+                        ele.LookupParameter("Mark").Set(totalface.ToString());
                     }
-                    totalarea = UnitUtils.Convert(totalarea, DisplayUnitType.DUT_SQUARE_FEET, DisplayUnitType.DUT_SQUARE_METERS);
-                    ele.LookupParameter("Comments").Set(totalarea.ToString());
-                    ele.LookupParameter("Mark").Set(totalface.ToString());
+                    tran.Commit();
                 }
-                tran.Commit();
-            }                  
-            return Result.Succeeded;        
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
