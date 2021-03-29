@@ -41,11 +41,17 @@ namespace WpfControlLibrary1
                     int totalface = 0;
                     double totalarea = 0.0;
 
+                    //Get side face
+                    var sideFaces = HostObjectUtils.GetSideFaces((HostObject)ele,ShellLayerType(solid));
+                    //Access the first side face
+                    Element ele = doc.GetElement(sideFaces[0]);                   
+
+                   
                     foreach (var obj in geo)
                     {
                         var solid = obj as Solid;
                         if (solid != null)
-                        {
+                        {                           
                             foreach (Face f in solid.Faces)
                             {
                                 totalarea += f.Area;
