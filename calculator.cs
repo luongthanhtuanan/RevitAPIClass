@@ -66,7 +66,6 @@ namespace WpfControlLibrary1
                                             totalarea += face.Area;
                                             totalface++;
                                         }                                       
-
                                     }                                   
                                     //totalarea += face.Area;
                                     //totalface++;
