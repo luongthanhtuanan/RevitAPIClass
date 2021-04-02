@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -19,9 +20,12 @@ namespace WpfControlLibrary1
             var uidoc = commandData.Application.ActiveUIDocument;
             var doc = uidoc.Document;
 
-            var colector = new FilteredElementCollector(doc);
-            ICollection<Element> collection = colector.OfClass(typeof(Wall))
+            var collector = new FilteredElementCollector(doc);
+            ICollection<Element> collection = collector.OfClass(typeof(Wall))
                 .ToElements();
+           
+
+
             
 
             foreach (var element in collection)
@@ -30,6 +34,7 @@ namespace WpfControlLibrary1
 
             }
 
+            MessageBox.Show(message);
 
 
 
