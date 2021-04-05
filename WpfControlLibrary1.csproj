@@ -74,11 +74,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="add stacked items.cs" />
     <Compile Include="app.cs" />
     <Compile Include="autojoin.cs" />
     <Compile Include="command1.cs" />
     <Compile Include="command2.cs" />
     <Compile Include="command3.cs" />
+    <Compile Include="IExternalDBApplication.cs" />
     <Compile Include="Prompting the user.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
